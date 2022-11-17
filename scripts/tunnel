@@ -1,0 +1,6 @@
+#!/bin/bash
+   BAN=$(ps -fea |grep autossh.*3306 |grep -v grep)
+   if [ -z "$BAN" ]; then
+     #autossh -M 0 -N -f -o "PasswordAuthentication=no" -o "ServerAliveInterval 30" -o "ServerAliveCountMax 3" -R $PORT:localhost:22 pi@probe-gateway.kiwox.com -i ~/.ssh/key_probes &
+     autossh -N -M 0 -o "ServerAliveInterval 30" -o "ServerAliveCountMax 3" -L 33306:10.0.1.202:3306 -i /home/pi/.ssh/id_rsa  mleal@sparta.kiwox.cl &
+   fi

@@ -1,0 +1,9 @@
+#!/bin/bash
+FILE=/probeclient_app/config/remote_port
+if [ -f "$FILE" ]; then
+   PORT=$(head -1 $FILE)
+   BAN=$(ps -fea |grep autossh.*PasswordAuthentication |grep -v grep)
+   if [ -z "$BAN" ]; then
+     autossh -M 0 -N -f -o "PasswordAuthentication=no" -o "ServerAliveInterval=30" -o "ServerAliveCountMax=3" -R $PORT:localhost:22 pi@probe-gateway.kiwox.com -i ~/.ssh/key_probes &
+   fi
+fi
